@@ -1,7 +1,9 @@
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import {
   addAuthenticatedUser,
+  loadUsers,
   removeAuthenticatedUser,
+  selectRegisteredUsers,
 } from "./state/loginReducer";
 import { useEffect, useState } from "react";
 import { useNavigate, useSearchParams } from "react-router-dom";
@@ -11,6 +13,7 @@ const LoginPage = ({ redirectAfterLogout = false }) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const [searchParams, _] = useSearchParams();
+  const registeredUsers = useSelector(selectRegisteredUsers);
 
   const [user, setUser] = useState(null);
 
@@ -18,6 +21,10 @@ const LoginPage = ({ redirectAfterLogout = false }) => {
     dispatch(addAuthenticatedUser(user));
     navigate(searchParams.get("redirect") || "/dashboard");
   };
+
+  useEffect(() => {
+    dispatch(loadUsers());
+  }, []);
 
   useEffect(() => {
     if (redirectAfterLogout) {
@@ -38,9 +45,13 @@ const LoginPage = ({ redirectAfterLogout = false }) => {
         <option value="" disabled>
           Select
         </option>
-        <option value="John">John</option>
-        <option value="Jane">Jane</option>
-        <option value="Mike">Mike</option>
+        {Object.keys(registeredUsers)
+          .map((key) => registeredUsers[key])
+          .map((user) => (
+            <option key={user.id} value={user.id}>
+              {user.id}
+            </option>
+          ))}
       </select>
       <Button
         className="ml-5 "
