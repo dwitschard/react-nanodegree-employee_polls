@@ -1,7 +1,6 @@
 import { useDispatch, useSelector } from "react-redux";
 import {
   addAuthenticatedUser,
-  loadUsers,
   removeAuthenticatedUser,
   selectRegisteredUsers,
 } from "./state/loginReducer";
@@ -21,10 +20,6 @@ const LoginPage = ({ redirectAfterLogout = false }) => {
     dispatch(addAuthenticatedUser(user));
     navigate(searchParams.get("redirect") || "/dashboard");
   };
-
-  useEffect(() => {
-    dispatch(loadUsers());
-  }, []);
 
   useEffect(() => {
     if (redirectAfterLogout) {

@@ -8,3 +8,5 @@ export const applicationState = configureStore({
     polls: pollReducer,
   },
 });
+
+export const selectApplicationState = (state) => state;

@@ -35,6 +35,8 @@ export const pollSlice = createSlice({
 
 const selectPollSlice = (state) => state.polls;
 export const selectPolls = (state) => selectPollSlice(state).polls;
+export const selectPollById = (state, id) => selectPolls(state)[id];
+
 export const selectPollIds = (state) => selectPollSlice(state).pollIds;
 export const selectPollsLoading = (state) => selectPollSlice(state).loading;
 

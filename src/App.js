@@ -14,9 +14,13 @@ import NotFoundPage from "./features/404/NotFoundPage";
 import Navbar from "./components/Navbar";
 import PollDetailPage from "./features/poll/detail/PollDetailPage";
 import LogoutPage from "./features/logout/LogoutPage";
-import { useSelector } from "react-redux";
-import { selectCurrentUser } from "./features/login/state/loginReducer";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  loadUsers,
+  selectCurrentUser,
+} from "./features/login/state/loginReducer";
 import { useEffect } from "react";
+import { loadPolls } from "./features/poll/state/pollReducer";
 
 const CoreRoutes = () => {
   return (
@@ -44,8 +48,12 @@ function App() {
   const currentUser = useSelector(selectCurrentUser);
   const navigate = useNavigate();
   const location = useLocation();
+  const dispatch = useDispatch();
 
   useEffect(() => {
+    dispatch(loadUsers());
+    dispatch(loadPolls());
+
     if (currentUser === null) {
       const previousLocation = location.pathname;
       navigate(`/?redirect=${previousLocation}`);

@@ -47,9 +47,11 @@ export const { addAuthenticatedUser, removeAuthenticatedUser } =
 const selectLoginSlice = (state) => state.login;
 
 export const selectCurrentUser = (state) => selectLoginSlice(state).user;
-export const selectRegisteredUsers = (state) =>
-  selectLoginSlice(state).registeredUsers;
-export const selectIsLoadingRegisteredUsers = (state) =>
-  selectLoginSlice(state).loading;
+export const selectRegisteredUsers = (state) => {
+  console.log(state);
+  console.log(selectLoginSlice(state));
+  return selectLoginSlice(state).registeredUsers;
+};
+export const selectUserById = (state, id) => selectRegisteredUsers(state)[id];
 
 export default loginSlice.reducer;

@@ -1,21 +1,15 @@
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import { selectCurrentUser } from "../login/state/loginReducer";
 import Welcome from "../../components/Welcome";
 import PollCard from "./components/PollCard";
-import { useEffect } from "react";
-import { loadPolls, selectPolls } from "../poll/state/pollReducer";
+import { selectPolls } from "../poll/state/pollReducer";
 import { formatDate } from "../../helpers/date";
 import { useNavigate } from "react-router-dom";
 
 const DashboardPage = () => {
   const user = useSelector(selectCurrentUser);
   const polls = useSelector(selectPolls);
-  const dispatch = useDispatch();
   const navigate = useNavigate();
-
-  useEffect(() => {
-    dispatch(loadPolls());
-  }, []);
 
   const getAllPolls = Object.keys(polls).reduce(
     (acc, curr) => [...acc, polls[curr]],
