@@ -9,7 +9,6 @@ import { createSelector } from "@reduxjs/toolkit";
 import { selectApplicationState } from "../../../store/applicationStore";
 import PollDetailHeader from "./components/PollDetailHeader";
 import PollQuestion from "./components/PollQuestion";
-import PollQuestionView from "./components/PollQuestionView";
 
 const PollDetailPage = () => {
   const { questionId } = useParams();
@@ -30,9 +29,11 @@ const PollDetailPage = () => {
 
   const { author, poll, currentUser } = useSelector(pollDetailViewSelector);
 
-  const canUserStillAnswer = (currentUser) => {
+  const userAnsweredQuestion = (currentUser) => {
+    console.log("hiii");
     const submittedAnswers = [...poll.optionOne.votes, ...poll.optionTwo.votes];
-    return !submittedAnswers.includes(currentUser);
+    console.log(!submittedAnswers.includes(currentUser));
+    return submittedAnswers.includes(currentUser);
   };
 
   const handleOptionSelection = (pollId, option, currentUser) => {
@@ -50,18 +51,16 @@ const PollDetailPage = () => {
         authorName={author.id}
         authorAvatarUrl={author.avatarURL}
       />
-      {canUserStillAnswer(currentUser) ? (
-        <PollQuestion
-          poll={poll}
-          optionOne={poll.optionOne}
-          optionTwo={poll.optionTwo}
-          clickHandler={(pollId, optionKey) =>
-            handleOptionSelection(pollId, optionKey, currentUser)
-          }
-        />
-      ) : (
-        <PollQuestionView poll={poll} />
-      )}
+      <PollQuestion
+        poll={poll}
+        optionOne={poll.optionOne}
+        optionTwo={poll.optionTwo}
+        currentUser={currentUser}
+        isDisabled={userAnsweredQuestion(currentUser)}
+        clickHandler={(pollId, optionKey) =>
+          handleOptionSelection(pollId, optionKey, currentUser)
+        }
+      />
     </div>
   );
 };
