@@ -1,7 +1,13 @@
 
 function App() {
   return (
-    <div>Hello World</div>
+      <div>
+          <h1 className="text-3xl">
+              Hello world!
+          </h1>
+          <div>Hi there</div>
+          <p>Paragrah text</p>
+      </div>
   );
 }
 
