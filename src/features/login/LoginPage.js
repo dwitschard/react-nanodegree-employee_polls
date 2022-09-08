@@ -5,6 +5,7 @@ import {
 } from "./state/loginReducer";
 import { useEffect, useState } from "react";
 import { useNavigate, useSearchParams } from "react-router-dom";
+import Button from "../../components/Button";
 
 const LoginPage = ({ redirectAfterLogout = false }) => {
   const dispatch = useDispatch();
@@ -41,14 +42,13 @@ const LoginPage = ({ redirectAfterLogout = false }) => {
         <option value="Jane">Jane</option>
         <option value="Mike">Mike</option>
       </select>
-      <button
+      <Button
+        className="ml-5 "
         disabled={!isSubmitActive()}
-        onClick={handleLogin}
-        type="button"
-        className="ml-5 px-3 py-1 text-xl uppercase rounded bg-primary hover:cursor-pointer text-tertiary hover:bg-accentPrimary"
+        handleClick={handleLogin}
       >
         Go
-      </button>
+      </Button>
     </div>
   );
 };
