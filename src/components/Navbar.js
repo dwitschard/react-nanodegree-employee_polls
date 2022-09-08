@@ -1,6 +1,6 @@
-import { Navigate, useLocation, useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 
-const Navbar = ({ isShown }) => {
+const Navbar = ({ isShown, currentUser }) => {
   const location = useLocation();
 
   return (
@@ -19,6 +19,11 @@ const Navbar = ({ isShown }) => {
             </li>
           </div>
           <div className="flex">
+            {currentUser && (
+              <li className="justify-self-end flex mr-3">
+                <div className="self-center">{currentUser}</div>
+              </li>
+            )}
             <li className="justify-self-end">
               <NavbarButton text="Logout" link="/logout" />
             </li>
