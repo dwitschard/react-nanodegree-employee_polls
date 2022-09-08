@@ -7,6 +7,7 @@ export const applicationState = configureStore({
     login: loginReducer,
     polls: pollReducer,
   },
+  devTools: true,
 });
 
 export const selectApplicationState = (state) => state;

@@ -14,8 +14,18 @@ export const pollSlice = createSlice({
       const poll = {
         text: action.payload,
       };
-
       state.push(poll);
+    },
+    submitVote: (state, action) => {
+      const { pollId, option, currentUser } = action.payload;
+      const currentPoll = state.polls[pollId];
+      state.polls[pollId] = {
+        ...currentPoll,
+        [option]: {
+          ...currentPoll[option],
+          votes: currentPoll[option].votes.concat(currentUser),
+        },
+      };
     },
   },
   extraReducers: (builder) => {
@@ -41,7 +51,7 @@ export const selectPollIds = (state) => selectPollSlice(state).pollIds;
 export const selectPollsLoading = (state) => selectPollSlice(state).loading;
 
 // this is for dispatch
-export const { addPoll } = pollSlice.actions;
+export const { addPoll, submitVote } = pollSlice.actions;
 
 // this is for configureStore
 export default pollSlice.reducer;

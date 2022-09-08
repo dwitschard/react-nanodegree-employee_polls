@@ -3,7 +3,7 @@ const PollDetailHeader = ({ authorName, authorAvatarUrl }) => {
     <>
       <div>
         <span className="text-4xl text-secondary text-opacity-50">Poll of</span>
-        <span className="pl-2 text-6xl">{authorName}</span>
+        <span className="pl-4 text-6xl">{authorName}</span>
       </div>
       <img
         src={authorAvatarUrl}

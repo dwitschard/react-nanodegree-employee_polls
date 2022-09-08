@@ -11,13 +11,13 @@ const PollQuestion = ({ poll, clickHandler }) => {
       <div className="flex flex-row gap-20">
         <div className="flex flex-col items-center justify-center">
           <div>{optionOne.text}</div>
-          <Button handleClick={() => clickHandler(poll.id, optionOne)}>
+          <Button handleClick={() => clickHandler(poll.id, "optionOne")}>
             Option 1
           </Button>
         </div>
         <div className="flex flex-col items-center justify-center">
           <div>{optionTwo.text}</div>
-          <Button handleClick={() => clickHandler(poll.id, optionTwo)}>
+          <Button handleClick={() => clickHandler(poll.id, "optionTwo")}>
             Option 2
           </Button>
         </div>
