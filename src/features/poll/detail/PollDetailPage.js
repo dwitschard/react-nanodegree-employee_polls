@@ -30,9 +30,7 @@ const PollDetailPage = () => {
   const { author, poll, currentUser } = useSelector(pollDetailViewSelector);
 
   const userAnsweredQuestion = (currentUser) => {
-    console.log("hiii");
     const submittedAnswers = [...poll.optionOne.votes, ...poll.optionTwo.votes];
-    console.log(!submittedAnswers.includes(currentUser));
     return submittedAnswers.includes(currentUser);
   };
 
