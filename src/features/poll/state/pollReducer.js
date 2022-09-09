@@ -1,21 +1,24 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { getQuestions } from "../../../mock-server/api";
+import { getQuestions, saveQuestion } from "../../../mock-server/api";
 
 export const loadPolls = createAsyncThunk(
   "poll/fetchPolls",
   async () => await getQuestions()
 );
 
+export const persistPoll = createAsyncThunk(
+  "polls/createPoll",
+  async ({ poll }) => {
+    const savedQuestion = await saveQuestion(poll);
+    console.log(savedQuestion);
+    return { poll: savedQuestion };
+  }
+);
+
 export const pollSlice = createSlice({
   name: "polls",
   initialState: { polls: [], pollIds: [], loading: false },
   reducers: {
-    addPoll: (state, action) => {
-      const poll = {
-        text: action.payload,
-      };
-      state.push(poll);
-    },
     submitVote: (state, action) => {
       const { pollId, option, currentUser } = action.payload;
       const currentPoll = state.polls[pollId];
@@ -39,7 +42,11 @@ export const pollSlice = createSlice({
         loading: false,
         pollIds: Object.keys(action.payload),
         polls: action.payload,
-      }));
+      }))
+      .addCase(persistPoll.fulfilled, (state, action) => {
+        const { poll } = action.payload;
+        state.polls[poll.id] = poll;
+      });
   },
 });
 
@@ -51,7 +58,7 @@ export const selectPollIds = (state) => selectPollSlice(state).pollIds;
 export const selectPollsLoading = (state) => selectPollSlice(state).loading;
 
 // this is for dispatch
-export const { addPoll, submitVote } = pollSlice.actions;
+export const { submitVote } = pollSlice.actions;
 
 // this is for configureStore
 export default pollSlice.reducer;

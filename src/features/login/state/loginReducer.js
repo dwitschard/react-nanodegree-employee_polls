@@ -1,6 +1,6 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { getUsers } from "../../../mock-server/api";
-import { submitVote } from "../../poll/state/pollReducer";
+import { persistPoll, submitVote } from "../../poll/state/pollReducer";
 
 const initialState = {
   user: null,
@@ -42,6 +42,10 @@ export const loginSlice = createSlice({
       .addCase(submitVote, (state, action) => {
         const { pollId, option, currentUser } = action.payload;
         state.registeredUsers[currentUser].answers[pollId] = option;
+      })
+      .addCase(persistPoll.fulfilled, (state, action) => {
+        const { poll } = action.payload;
+        state.registeredUsers[poll.author].questions.push(poll.id);
       });
   },
 });

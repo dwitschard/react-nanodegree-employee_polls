@@ -1,11 +1,24 @@
 import CreatePoll from "./components/CreatePoll";
 import { useNavigate } from "react-router-dom";
+import { persistPoll } from "../state/pollReducer";
+import { useDispatch, useSelector } from "react-redux";
+import { selectCurrentUser } from "../../login/state/loginReducer";
 
 const PollCreatePage = () => {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const user = useSelector(selectCurrentUser);
 
   const handlePollSubmission = (formValues) => {
-    // TODO persist newly created Poll!
+    dispatch(
+      persistPoll({
+        poll: {
+          optionOneText: formValues.optionOne,
+          optionTwoText: formValues.optionTwo,
+          author: user,
+        },
+      })
+    );
     console.log(formValues);
     navigate("/dashboard");
   };
