@@ -56,4 +56,22 @@ export const selectRegisteredUsers = (state) =>
   selectLoginSlice(state).registeredUsers;
 export const selectUserById = (state, id) => selectRegisteredUsers(state)[id];
 
+export const selectLeaderboardInformation = (state) => {
+  const users = selectRegisteredUsers(state);
+  return Object.keys(users).reduce((acc, curr) => {
+    const currentUser = users[curr];
+    return [
+      ...acc,
+      {
+        id: currentUser.id,
+        avatarURL: currentUser.avatarURL,
+        answers: currentUser.answers,
+        answerNumber: Object.keys(currentUser.answers).length,
+        questions: currentUser.questions,
+        questionsNumber: Object.keys(currentUser.questions).length,
+      },
+    ];
+  }, []);
+};
+
 export default loginSlice.reducer;
