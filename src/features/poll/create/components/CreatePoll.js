@@ -14,7 +14,7 @@ const CreatePoll = ({ onCreation }) => {
 
   function isFormValid() {
     const { optionOne, optionTwo } = formValues;
-    return optionOne !== "" && optionTwo !== "";
+    return optionOne.trim() !== "" && optionTwo.trim() !== "";
   }
   return (
     <form onSubmit={handleOnCreate}>
