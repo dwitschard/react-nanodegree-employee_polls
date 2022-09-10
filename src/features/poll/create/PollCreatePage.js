@@ -19,7 +19,6 @@ const PollCreatePage = () => {
         },
       })
     );
-    console.log(formValues);
     navigate("/dashboard");
   };
 

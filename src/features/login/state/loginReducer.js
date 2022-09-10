@@ -39,7 +39,7 @@ export const loginSlice = createSlice({
         registeredUserIds: Object.keys(action.payload),
         registeredUsers: action.payload,
       }))
-      .addCase(submitVote, (state, action) => {
+      .addCase(submitVote.fulfilled, (state, action) => {
         const { pollId, option, currentUser } = action.payload;
         state.registeredUsers[currentUser].answers[pollId] = option;
       })
