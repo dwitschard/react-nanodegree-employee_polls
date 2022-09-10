@@ -13,6 +13,7 @@ export const loadPolls = createAsyncThunk(
 export const persistPoll = createAsyncThunk(
   "polls/createPoll",
   async ({ poll }) => {
+    console.log(poll);
     const savedQuestion = await saveQuestion(poll);
     return { poll: savedQuestion };
   }

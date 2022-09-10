@@ -15,7 +15,6 @@ const Button = ({
         ${disabled && "bg-secondary/50 text-white"}  
       `}
     >
-      <pre>{disabled}</pre>
       {children}
     </button>
   );
