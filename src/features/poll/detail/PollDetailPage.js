@@ -9,6 +9,7 @@ import { createSelector } from "@reduxjs/toolkit";
 import { selectApplicationState } from "../../../store/applicationStore";
 import PollDetailHeader from "./components/PollDetailHeader";
 import PollQuestion from "./components/PollQuestion";
+import { useEffect } from "react";
 
 const PollDetailPage = () => {
   const { questionId } = useParams();
@@ -28,6 +29,12 @@ const PollDetailPage = () => {
   );
 
   const { author, poll, currentUser } = useSelector(pollDetailViewSelector);
+
+  useEffect(() => {
+    if (currentUser && !poll) {
+      navigate(`/404?reason=Question \"${questionId}\" not Existing`);
+    }
+  }, [poll, currentUser, author]);
 
   const userAnsweredQuestion = (currentUser) => {
     const submittedAnswers = [...poll.optionOne.votes, ...poll.optionTwo.votes];
